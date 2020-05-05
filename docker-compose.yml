@@ -2,14 +2,14 @@ version: '3'
 
 services:
   php: # アプリケーションサーバの設定
-    container_name: php-test2
+    container_name: php-test2  # 任意の名前
     build: ./docker/php # ./docker/php配下のDockerfileを参照して構築
     volumes:
     - ./server:/var/www # 開発ディレクトリと公開ディレクトリをマウント
 
   nginx: # WEBサーバのコンテナの設定
     image: nginx # nginxの公式イメージを使用
-    container_name: nginx-test2
+    container_name: nginx-test2  # 任意の名前
     ports:
     - 8000:80 # ゲストとホストそれぞれの80番ポートで接続
     volumes:
@@ -20,12 +20,12 @@ services:
 
   db: # DBサーバのコンテナの設定
     image: mysql:5.7 # mysqlの公式イメージ使用
-    container_name: db-test2
+    container_name: db-test2 # 任意の名前
     environment: # DBの設定
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: database
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: database # 任意のDB名にしておく
+      MYSQL_USER: docker # 必ずenvとuser名を合わせる
+      MYSQL_PASSWORD: docker # 必ずenvとpasswordを合わせる
       TZ: 'Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # コンテナ起動時のコマンドを記述
     volumes: # コンテナのDBファイルを./docker/db/に永続化する
@@ -35,7 +35,7 @@ services:
     ports:
     - 3306:3306 # ゲストとホストそれぞれの3306番ポートで接続
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin/phpmyadmin  # phpmyadminのイメージを使用
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=db
